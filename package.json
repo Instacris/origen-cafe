@@ -1,0 +1,12 @@
+{
+  "name": "origen-cafe",
+  "version": "1.0.0",
+  "description": "Tienda de café con carrito de compras, base de datos SQLite y panel administrativo.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  }
+}

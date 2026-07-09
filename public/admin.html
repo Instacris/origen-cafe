@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administración — ORIGEN Café</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23a05c2c' d='M6 10h16v10a6 6 0 0 1-6 6h-4a6 6 0 0 1-6-6V10zm18 2h2a4 4 0 0 1 0 8h-2v-2h2a2 2 0 0 0 0-4h-2v-2zM10 4c0 1.5 2 1.5 2 3s-2 1.5-2 3h2c0-1.5 2-1.5 2-3s-2-1.5-2-3h-2zm6 0c0 1.5 2 1.5 2 3s-2 1.5-2 3h2c0-1.5 2-1.5 2-3s-2-1.5-2-3h-2z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="admin-body">
+
+  <!-- Vista: login -->
+  <div class="login-wrap" id="login-view" hidden>
+    <div class="login-card">
+      <div class="brand">ORIGEN</div>
+      <p class="login-sub">Panel de administración</p>
+      <div class="form-error" id="login-error"></div>
+      <form id="login-form">
+        <div class="field">
+          <label for="login-user">Usuario</label>
+          <input id="login-user" type="text" required autocomplete="username">
+        </div>
+        <div class="field">
+          <label for="login-pass">Contraseña</label>
+          <input id="login-pass" type="password" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-primary" id="login-submit">Ingresar</button>
+      </form>
+      <a href="/" class="login-back">← Volver a la tienda</a>
+    </div>
+  </div>
+
+  <!-- Vista: panel -->
+  <div id="panel-view" hidden>
+    <header class="admin-header">
+      <div class="container">
+        <a href="/admin" class="brand">ORIGEN <small>Administración</small></a>
+        <div class="admin-user">
+          <span id="admin-username"></span>
+          <a href="/" class="btn btn-outline btn-sm">Ver tienda</a>
+          <button class="btn btn-outline btn-sm" id="logout-btn">Cerrar sesión</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="tabs">
+        <button class="tab active" data-tab="products">Productos</button>
+        <button class="tab" data-tab="orders">Pedidos</button>
+        <button class="tab" data-tab="settings">Ajustes</button>
+      </div>
+
+      <!-- Pestaña productos -->
+      <section id="tab-products">
+        <div class="stats-row" id="stats-row"></div>
+
+        <div class="panel">
+          <div class="panel-toolbar">
+            <input type="search" class="search-input" id="admin-search" placeholder="Buscar producto…">
+            <select class="select" id="admin-category-filter">
+              <option value="">Todas las categorías</option>
+            </select>
+            <div class="spacer"></div>
+            <button class="btn btn-primary btn-sm" id="new-product-btn">+ Nuevo producto</button>
+          </div>
+          <div class="table-wrap">
+            <table class="data">
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Precio</th>
+                  <th>Oferta</th>
+                  <th>Stock</th>
+                  <th>Destacado</th>
+                  <th>Visible</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="products-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pestaña pedidos -->
+      <section id="tab-orders" hidden>
+        <div class="panel">
+          <div class="table-wrap">
+            <table class="data">
+              <thead>
+                <tr>
+                  <th>N.º</th>
+                  <th>Fecha</th>
+                  <th>Cliente</th>
+                  <th>Artículos</th>
+                  <th>Total</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody id="orders-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pestaña ajustes -->
+      <section id="tab-settings" hidden>
+        <div class="settings-grid">
+          <div class="settings-card">
+            <h3>Barra de anuncio</h3>
+            <p class="hint">Mensaje destacado que aparece en la parte superior de la tienda.</p>
+            <form id="announcement-form">
+              <div class="field">
+                <label for="set-announcement">Texto del anuncio</label>
+                <input id="set-announcement" type="text" maxlength="140">
+              </div>
+              <label class="check-field" style="margin-bottom:16px">
+                <input type="checkbox" id="set-announcement-active"> Mostrar anuncio en la tienda
+              </label>
+              <button type="submit" class="btn btn-primary btn-sm">Guardar cambios</button>
+            </form>
+          </div>
+
+          <div class="settings-card">
+            <h3>Cambiar contraseña</h3>
+            <p class="hint">Actualiza la contraseña de acceso al panel.</p>
+            <div class="form-error" id="password-error"></div>
+            <form id="password-form">
+              <div class="field">
+                <label for="pw-current">Contraseña actual</label>
+                <input id="pw-current" type="password" required autocomplete="current-password">
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="pw-next">Nueva contraseña</label>
+                  <input id="pw-next" type="password" required minlength="6" autocomplete="new-password">
+                </div>
+                <div class="field">
+                  <label for="pw-confirm">Repetir nueva</label>
+                  <input id="pw-confirm" type="password" required minlength="6" autocomplete="new-password">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-sm">Actualizar contraseña</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal producto -->
+  <div class="modal" id="product-modal">
+    <div class="modal-card wide">
+      <div class="modal-head">
+        <h3 id="product-modal-title">Nuevo producto</h3>
+        <button class="icon-button" id="product-modal-close" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="form-error" id="product-error"></div>
+      <form id="product-form">
+        <div class="field">
+          <label for="pf-name">Nombre</label>
+          <input id="pf-name" type="text" required>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="pf-category">Categoría</label>
+            <input id="pf-category" type="text" required list="category-list">
+            <datalist id="category-list"></datalist>
+          </div>
+          <div class="field">
+            <label for="pf-stock">Stock</label>
+            <input id="pf-stock" type="number" min="0" step="1" value="0" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="pf-description">Descripción</label>
+          <textarea id="pf-description"></textarea>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="pf-price">Precio actual ($)</label>
+            <input id="pf-price" type="number" min="1" step="1" required>
+          </div>
+          <div class="field" id="pf-prev-wrap" hidden>
+            <label for="pf-prev-price">Precio anterior ($)</label>
+            <input id="pf-prev-price" type="number" min="0" step="1">
+          </div>
+        </div>
+        <div style="display:flex; gap:22px; flex-wrap:wrap; margin: 4px 0 16px">
+          <label class="check-field"><input type="checkbox" id="pf-on-sale"> En oferta</label>
+          <label class="check-field"><input type="checkbox" id="pf-featured"> Destacado</label>
+          <label class="check-field"><input type="checkbox" id="pf-active" checked> Visible en la tienda</label>
+        </div>
+        <div class="field">
+          <label>Imagen del producto</label>
+          <div class="img-preview" id="pf-img-preview">Sin imagen — se mostrará un ícono de la categoría</div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center">
+            <input type="file" id="pf-image-file" accept="image/png,image/jpeg,image/webp,image/gif" style="font-size:0.82rem">
+            <button type="button" class="btn btn-outline btn-sm" id="pf-image-remove" hidden>Quitar imagen</button>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" id="product-cancel">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="product-save">Guardar producto</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="/js/backend-local.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

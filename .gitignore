@@ -1,0 +1,6 @@
+.claude/
+.vercel/
+.env*
+node_modules/
+data/
+*.log

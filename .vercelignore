@@ -1,0 +1,9 @@
+.claude/
+.git/
+.env*
+node_modules/
+server.js
+db.js
+package.json
+package-lock.json
+data/
