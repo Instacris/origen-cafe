@@ -12,26 +12,26 @@
   const DB_KEY = 'origen_db_v1';
   const SESSION_KEY = 'origen_admin_session_v1';
 
-  // [name, category, description, price, prev_price, on_sale, stock, featured]
+  // [name, category, description, price, prev_price, on_sale, stock, featured, image]
   const SEED = [
-    ['Prensa Francesa 600 ml', 'Cafeteras', 'Prensa de vidrio borosilicato con marco de acero inoxidable. Ideal para 3 tazas de café de cuerpo completo.', 18990, 24990, 1, 24, 0],
-    ['Cafetera Moka Italiana 6 tazas', 'Cafeteras', 'Clásica cafetera de aluminio para preparar café intenso al estilo italiano, apta para cocinas a gas y eléctricas.', 22990, null, 0, 18, 0],
-    ['Cafetera de Goteo Programable 1.5 L', 'Cafeteras', 'Con temporizador de 24 horas, jarra de vidrio y placa calefactora. Prepara hasta 12 tazas.', 54990, 64990, 1, 10, 1],
-    ['Chemex 6 tazas', 'Cafeteras', 'Cafetera de filtrado manual en vidrio soplado con collar de madera. Un ícono del método pour-over.', 49990, null, 0, 7, 0],
-    ['Máquina de Espresso Semiautomática 15 bar', 'Espresso', 'Bomba de 15 bares, vaporizador de leche y portafiltro de acero. Espresso de calidad de cafetería en casa.', 189990, 229990, 1, 6, 1],
-    ['Máquina Superautomática con Molinillo', 'Espresso', 'Muele, dosifica y extrae con un solo botón. Molinillo cerámico integrado y pantalla táctil.', 429990, null, 0, 3, 1],
-    ['Espresso de Cápsulas Compacta', 'Espresso', 'Diseño compacto de extracción a 19 bares, compatible con cápsulas estándar. Lista en 25 segundos.', 79990, null, 0, 15, 0],
-    ['Set 2 Tazas de Cerámica 250 ml', 'Vasos y Tazas', 'Tazas de cerámica esmaltada de doble pared que conservan la temperatura. Aptas para lavavajillas.', 12990, null, 0, 40, 0],
-    ['Vaso Térmico de Acero 350 ml', 'Vasos y Tazas', 'Doble pared al vacío: mantiene el calor 6 horas. Tapa antiderrame y exterior antideslizante.', 16990, 19990, 1, 32, 0],
-    ['Set 4 Tazas de Espresso con Platillos', 'Vasos y Tazas', 'Porcelana blanca de pared gruesa, 80 ml. El estándar de la barra italiana.', 21990, null, 0, 14, 0],
-    ['Par de Vasos de Doble Vidrio 250 ml', 'Vasos y Tazas', 'Vidrio borosilicato de doble pared: el café flota visualmente y el vaso no quema.', 14990, null, 0, 26, 0],
-    ['Molinillo Manual de Muelas Cerámicas', 'Molinillos', 'Molienda ajustable de fina a gruesa, cuerpo de acero y manivela plegable. Perfecto para viajes.', 24990, null, 0, 12, 0],
-    ['Molinillo Eléctrico de Muelas Cónicas', 'Molinillos', '40 grados de molienda, dosificación por tiempo y tolva de 400 g. Consistencia profesional.', 69990, 84990, 1, 8, 1],
-    ['Café de Grano Tostado Medio 1 kg', 'Café', 'Blend de altura con notas de chocolate y frutos secos. Tostado la semana del despacho.', 15990, null, 0, 60, 0],
-    ['Café Molido Espresso 500 g', 'Café', 'Molienda fina calibrada para espresso. Intensidad 8/10, crema densa y persistente.', 9990, 11990, 1, 45, 0],
-    ['Báscula Digital con Temporizador', 'Accesorios', 'Precisión de 0,1 g y cronómetro integrado para recetas de filtrado exactas.', 27990, null, 0, 16, 0],
-    ['Tamper de Acero 51 mm', 'Accesorios', 'Base plana de acero pulido y mango ergonómico de aluminio. Compactación uniforme.', 13990, null, 0, 20, 0],
-    ['Jarra Espumadora de Leche 500 ml', 'Accesorios', 'Acero inoxidable con pico de precisión para arte latte y marcas de medición internas.', 11990, null, 0, 22, 0],
+    ['Prensa Francesa 600 ml', 'Cafeteras', 'Prensa de vidrio borosilicato con marco de acero inoxidable. Ideal para 3 tazas de café de cuerpo completo.', 18990, 24990, 1, 24, 0, '/img/products/prensa-francesa.webp'],
+    ['Cafetera Moka Italiana 6 tazas', 'Cafeteras', 'Clásica cafetera de aluminio para preparar café intenso al estilo italiano, apta para cocinas a gas y eléctricas.', 22990, null, 0, 18, 0, '/img/products/cafetera-moka-italiana.webp'],
+    ['Cafetera de Goteo Programable 1.5 L', 'Cafeteras', 'Con temporizador de 24 horas, jarra de vidrio y placa calefactora. Prepara hasta 12 tazas.', 54990, 64990, 1, 10, 1, '/img/products/cafetera-goteo-programable.webp'],
+    ['Chemex 6 tazas', 'Cafeteras', 'Cafetera de filtrado manual en vidrio soplado con collar de madera. Un ícono del método pour-over.', 49990, null, 0, 7, 0, '/img/products/chemex-6-tazas.jpeg'],
+    ['Máquina de Espresso Semiautomática 15 bar', 'Espresso', 'Bomba de 15 bares, vaporizador de leche y portafiltro de acero. Espresso de calidad de cafetería en casa.', 189990, 229990, 1, 6, 1, '/img/products/maquina-espresso-semiautomatica.jpg'],
+    ['Máquina Superautomática con Molinillo', 'Espresso', 'Muele, dosifica y extrae con un solo botón. Molinillo cerámico integrado y pantalla táctil.', 429990, null, 0, 3, 1, '/img/products/maquina-superautomatica-molinillo.webp'],
+    ['Espresso de Cápsulas Compacta', 'Espresso', 'Diseño compacto de extracción a 19 bares, compatible con cápsulas estándar. Lista en 25 segundos.', 79990, null, 0, 15, 0, '/img/products/espresso-capsulas-compacta.webp'],
+    ['Set 2 Tazas de Cerámica 250 ml', 'Vasos y Tazas', 'Tazas de cerámica esmaltada de doble pared que conservan la temperatura. Aptas para lavavajillas.', 12990, null, 0, 40, 0, '/img/products/set-2-tazas-ceramica.avif'],
+    ['Vaso Térmico de Acero 350 ml', 'Vasos y Tazas', 'Doble pared al vacío: mantiene el calor 6 horas. Tapa antiderrame y exterior antideslizante.', 16990, 19990, 1, 32, 0, '/img/products/vaso-termico-acero.jpg'],
+    ['Set 4 Tazas de Espresso con Platillos', 'Vasos y Tazas', 'Porcelana blanca de pared gruesa, 80 ml. El estándar de la barra italiana.', 21990, null, 0, 14, 0, '/img/products/set-4-tazas-espresso.webp'],
+    ['Par de Vasos de Doble Vidrio 250 ml', 'Vasos y Tazas', 'Vidrio borosilicato de doble pared: el café flota visualmente y el vaso no quema.', 14990, null, 0, 26, 0, '/img/products/par-vasos-doble-vidrio.webp'],
+    ['Molinillo Manual de Muelas Cerámicas', 'Molinillos', 'Molienda ajustable de fina a gruesa, cuerpo de acero y manivela plegable. Perfecto para viajes.', 24990, null, 0, 12, 0, '/img/products/molinillo-manual-ceramico.webp'],
+    ['Molinillo Eléctrico de Muelas Cónicas', 'Molinillos', '40 grados de molienda, dosificación por tiempo y tolva de 400 g. Consistencia profesional.', 69990, 84990, 1, 8, 1, '/img/products/molinillo-electrico-conico.webp'],
+    ['Café de Grano Tostado Medio 1 kg', 'Café', 'Blend de altura con notas de chocolate y frutos secos. Tostado la semana del despacho.', 15990, null, 0, 60, 0, '/img/products/cafe-grano-tostado.jpeg'],
+    ['Café Molido Espresso 500 g', 'Café', 'Molienda fina calibrada para espresso. Intensidad 8/10, crema densa y persistente.', 9990, 11990, 1, 45, 0, '/img/products/cafe-molido-espresso.webp'],
+    ['Báscula Digital con Temporizador', 'Accesorios', 'Precisión de 0,1 g y cronómetro integrado para recetas de filtrado exactas.', 27990, null, 0, 16, 0, '/img/products/bascula-digital.webp'],
+    ['Tamper de Acero 51 mm', 'Accesorios', 'Base plana de acero pulido y mango ergonómico de aluminio. Compactación uniforme.', 13990, null, 0, 20, 0, '/img/products/tamper-acero.webp'],
+    ['Jarra Espumadora de Leche 500 ml', 'Accesorios', 'Acero inoxidable con pico de precisión para arte latte y marcas de medición internas.', 11990, null, 0, 22, 0, '/img/products/jarra-espumadora.webp'],
   ];
 
   const SEED_SETTINGS = {
@@ -47,7 +47,7 @@
     const products = SEED.map((p) => ({
       id: ++id, name: p[0], category: p[1], description: p[2], price: p[3],
       prev_price: p[4], on_sale: p[5], stock: p[6], featured: p[7],
-      active: 1, image: null, created_at: now(),
+      active: 1, image: p[8] || null, created_at: now(),
     }));
     return {
       products, orders: [], settings: { ...SEED_SETTINGS },

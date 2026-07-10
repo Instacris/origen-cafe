@@ -86,9 +86,11 @@ h1, h2, h3, .brand { font-family: var(--font-display); font-weight: 600; letter-
   text-decoration: none;
   letter-spacing: 0.14em;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 10px;
 }
+
+.brand img { width: 34px; height: 34px; object-fit: contain; border-radius: 8px; }
 
 .brand small {
   font-family: var(--font-body);
@@ -165,7 +167,13 @@ h1, h2, h3, .brand { font-family: var(--font-display); font-weight: 600; letter-
 .hero p { color: var(--ink-soft); font-size: 1.05rem; max-width: 46ch; margin-bottom: 28px; }
 
 .hero-art { display: flex; justify-content: center; }
-.hero-art svg { width: min(340px, 100%); height: auto; }
+.hero-photo {
+  width: min(380px, 100%);
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px -14px rgba(42, 27, 16, 0.35);
+  object-fit: cover;
+}
 
 .btn {
   display: inline-flex;
