@@ -3,9 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ORIGEN — Café, Máquinas y Accesorios</title>
+  <title>ORIGEN · Café, Máquinas y Accesorios</title>
   <meta name="description" content="Tienda especializada en cafeteras, máquinas de espresso, vasos, molinillos y café de especialidad.">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%232a1b10' d='M6 10h16v10a6 6 0 0 1-6 6h-4a6 6 0 0 1-6-6V10zm18 2h2a4 4 0 0 1 0 8h-2v-2h2a2 2 0 0 0 0-4h-2v-2zM10 4c0 1.5 2 1.5 2 3s-2 1.5-2 3h2c0-1.5 2-1.5 2-3s-2-1.5-2-3h-2zm6 0c0 1.5 2 1.5 2 3s-2 1.5-2 3h2c0-1.5 2-1.5 2-3s-2-1.5-2-3h-2z'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="/img/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
@@ -14,7 +17,7 @@
 
   <header class="site-header">
     <div class="container">
-      <a href="/" class="brand"><img src="/img/logo.png" alt="" width="34" height="34">ORIGEN <small>Café · Máquinas · Accesorios</small></a>
+      <a href="/" class="brand"><img src="/img/logo.svg" alt="" width="36" height="36">ORIGEN <small>Café · Máquinas · Accesorios</small></a>
       <div class="header-actions">
         <button class="cart-button" id="cart-open" aria-label="Abrir carrito">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
@@ -27,16 +30,99 @@
 
   <section class="hero">
     <div class="container">
-      <div>
+      <div class="hero-copy">
         <p class="hero-kicker">Especialistas en café desde el grano hasta la taza</p>
-        <h1>Todo lo que tu café merece, en un solo lugar.</h1>
-        <p>Cafeteras, máquinas de espresso, molinillos, vasos y café de especialidad,
-           seleccionados por gente que se toma el café en serio.</p>
-        <a href="#catalogo" class="btn btn-primary">Ver catálogo</a>
+        <h1>Todo lo que tu café <em>merece</em>, en un solo lugar.</h1>
+        <p class="hero-sub">Cafeteras, máquinas de espresso, molinillos y café de especialidad.
+           Y ahora también malteadas, batidos y cafés preparados por nuestra barra.</p>
+        <div class="hero-ctas">
+          <a href="#catalogo" class="btn btn-primary">Ver catálogo</a>
+          <a href="#catalogo" class="btn btn-outline" data-category="Malteadas">Malteadas y batidos</a>
+        </div>
       </div>
+
       <div class="hero-art">
-        <img src="/img/principal.png" alt="Selección de cafeteras y accesorios ORIGEN" class="hero-photo">
+        <div class="hero-scene" aria-hidden="true">
+          <div class="scene-glow"></div>
+
+          <svg class="scene-steam" viewBox="0 0 60 72" fill="none">
+            <path d="M18 66 c0 -14 14 -14 14 -28 c0 -12 -10 -14 -10 -24" stroke="#a05c2c" stroke-width="5" stroke-linecap="round"/>
+            <path d="M40 60 c0 -12 12 -12 12 -24 c0 -10 -8 -12 -8 -18" stroke="#a05c2c" stroke-width="5" stroke-linecap="round"/>
+          </svg>
+
+          <div class="scene-card scene-main">
+            <img src="/img/products/maquina-espresso-semiautomatica.jpg" alt="">
+          </div>
+          <div class="scene-card scene-drink">
+            <img src="/img/products/malteada-chocolate.svg" alt="">
+          </div>
+          <div class="scene-card scene-chemex">
+            <img src="/img/products/chemex-6-tazas.jpeg" alt="">
+          </div>
+
+          <div class="scene-ring">
+            <svg viewBox="0 0 160 160">
+              <defs><path id="ring-path" d="M 80 14 A 66 66 0 1 1 79.99 14"/></defs>
+              <text font-size="11.5" letter-spacing="1.4">
+                <textPath href="#ring-path">CAFÉ DE ESPECIALIDAD · BEBIDAS DE LA CASA · ORIGEN ·</textPath>
+              </text>
+            </svg>
+            <img src="/img/logo.svg" alt="" class="ring-logo">
+          </div>
+
+          <div class="scene-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M8 2h8l-1 5H9L8 2z"/><path d="M9 7l1.5 15h3L15 7"/></svg>
+            Bebidas desde <strong>$3.490</strong>
+          </div>
+
+          <svg class="scene-bean bean-1" viewBox="0 0 24 24"><g transform="rotate(-24 12 12)"><ellipse cx="12" cy="12" rx="7" ry="10" fill="#a05c2c"/><path d="M9 4 C 14 9 9 15 14 20" fill="none" stroke="#f6f3ee" stroke-width="2.2" stroke-linecap="round"/></g></svg>
+          <svg class="scene-bean bean-2" viewBox="0 0 24 24"><g transform="rotate(28 12 12)"><ellipse cx="12" cy="12" rx="7" ry="10" fill="#4c3a2c"/><path d="M9 4 C 14 9 9 15 14 20" fill="none" stroke="#f6f3ee" stroke-width="2.2" stroke-linecap="round"/></g></svg>
+          <svg class="scene-bean bean-3" viewBox="0 0 24 24"><g transform="rotate(-60 12 12)"><ellipse cx="12" cy="12" rx="7" ry="10" fill="#c9873f"/><path d="M9 4 C 14 9 9 15 14 20" fill="none" stroke="#f6f3ee" stroke-width="2.2" stroke-linecap="round"/></g></svg>
+        </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Datos de la tienda, fuera del hero -->
+  <div class="trust-band" aria-label="Datos de la tienda">
+    <ul class="hero-stats container">
+      <li><strong>30+</strong><span>productos seleccionados</span></li>
+      <li><strong>24 h</strong><span>despacho express</span></li>
+      <li><strong>7 días</strong><span>tostado de la semana</span></li>
+    </ul>
+  </div>
+
+  <!-- Cinta de categorías -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="marquee-half">
+        <span>Cafeteras</span><i>●</i><span>Espresso</span><i>●</i><span>Molinillos</span><i>●</i><span>Café de grano</span><i>●</i><span>Malteadas</span><i>●</i><span>Batidos</span><i>●</i><span>Cafés de la Casa</span><i>●</i><span>Vasos y Tazas</span><i>●</i><span>Accesorios</span><i>●</i>
+      </div>
+      <div class="marquee-half">
+        <span>Cafeteras</span><i>●</i><span>Espresso</span><i>●</i><span>Molinillos</span><i>●</i><span>Café de grano</span><i>●</i><span>Malteadas</span><i>●</i><span>Batidos</span><i>●</i><span>Cafés de la Casa</span><i>●</i><span>Vasos y Tazas</span><i>●</i><span>Accesorios</span><i>●</i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Carrusel de destacados -->
+  <section class="showcase" id="destacados" hidden>
+    <div class="container">
+      <div class="showcase-head">
+        <div>
+          <p class="showcase-kicker">Recién preparados y favoritos de la tienda</p>
+          <h2>Destacados de la casa</h2>
+        </div>
+        <div class="showcase-nav">
+          <button class="nav-btn" id="show-prev" aria-label="Producto anterior">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button class="nav-btn" id="show-next" aria-label="Producto siguiente">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="showcase-stage" id="showcase-stage" aria-live="polite"></div>
+      <div class="showcase-dots" id="showcase-dots" role="tablist" aria-label="Ir al destacado"></div>
     </div>
   </section>
 
@@ -66,7 +152,7 @@
   <footer class="site-footer">
     <div class="container">
       <div>
-        <div class="brand"><img src="/img/logo.png" alt="" width="34" height="34">ORIGEN</div>
+        <div class="brand"><img src="/img/logo.svg" alt="" width="36" height="36">ORIGEN</div>
         <p>Tienda especializada en equipamiento y café de especialidad.
            Asesoría honesta, despacho a todo el país.</p>
       </div>

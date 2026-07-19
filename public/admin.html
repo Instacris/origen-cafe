@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Administración — ORIGEN Café</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23a05c2c' d='M6 10h16v10a6 6 0 0 1-6 6h-4a6 6 0 0 1-6-6V10zm18 2h2a4 4 0 0 1 0 8h-2v-2h2a2 2 0 0 0 0-4h-2v-2zM10 4c0 1.5 2 1.5 2 3s-2 1.5-2 3h2c0-1.5 2-1.5 2-3s-2-1.5-2-3h-2zm6 0c0 1.5 2 1.5 2 3s-2 1.5-2 3h2c0-1.5 2-1.5 2-3s-2-1.5-2-3h-2z'/%3E%3C/svg%3E">
+  <title>Administración · ORIGEN Café</title>
+  <link rel="icon" type="image/svg+xml" href="/img/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body class="admin-body">
@@ -12,7 +15,7 @@
   <!-- Vista: login -->
   <div class="login-wrap" id="login-view" hidden>
     <div class="login-card">
-      <div class="brand"><img src="/img/logo.png" alt="" width="34" height="34">ORIGEN</div>
+      <div class="brand"><img src="/img/logo.svg" alt="" width="34" height="34">ORIGEN</div>
       <p class="login-sub">Panel de administración</p>
       <div class="form-error" id="login-error"></div>
       <form id="login-form">
@@ -34,7 +37,7 @@
   <div id="panel-view" hidden>
     <header class="admin-header">
       <div class="container">
-        <a href="/admin" class="brand"><img src="/img/logo.png" alt="" width="34" height="34">ORIGEN <small>Administración</small></a>
+        <a href="/admin" class="brand"><img src="/img/logo.svg" alt="" width="34" height="34">ORIGEN <small>Administración</small></a>
         <div class="admin-user">
           <span id="admin-username"></span>
           <a href="/" class="btn btn-outline btn-sm">Ver tienda</a>
@@ -193,7 +196,7 @@
         </div>
         <div class="field">
           <label>Imagen del producto</label>
-          <div class="img-preview" id="pf-img-preview">Sin imagen — se mostrará un ícono de la categoría</div>
+          <div class="img-preview" id="pf-img-preview">Sin imagen: se mostrará un ícono de la categoría</div>
           <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center">
             <input type="file" id="pf-image-file" accept="image/png,image/jpeg,image/webp,image/gif" style="font-size:0.82rem">
             <button type="button" class="btn btn-outline btn-sm" id="pf-image-remove" hidden>Quitar imagen</button>

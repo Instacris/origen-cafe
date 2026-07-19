@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="ORIGEN Café">
+  <defs>
+    <linearGradient id="bean" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#c9873f"/>
+      <stop offset="100%" stop-color="#a05c2c"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="38%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#4a2f1c"/>
+      <stop offset="100%" stop-color="#2a1b10"/>
+    </radialGradient>
+  </defs>
+
+  <!-- fondo -->
+  <circle cx="32" cy="32" r="31" fill="url(#halo)"/>
+  <circle cx="32" cy="32" r="27" fill="none" stroke="#a05c2c" stroke-width="1.4" opacity="0.85"/>
+
+  <!-- brote: el "origen" del café -->
+  <g stroke-linecap="round" fill="none">
+    <path d="M32 24 C 32 18 32 15 32 12" stroke="#f3e9dd" stroke-width="2.4"/>
+    <path d="M32 16 C 27 16 23.5 13.5 23 9.5 C 27.5 9 31.5 11.5 32 16 Z" fill="#f3e9dd" stroke="none"/>
+    <path d="M32 16 C 37 16 40.5 13.5 41 9.5 C 36.5 9 32.5 11.5 32 16 Z" fill="#d9b678" stroke="none"/>
+  </g>
+
+  <!-- grano de café -->
+  <g transform="rotate(-24 32 38)">
+    <ellipse cx="32" cy="38" rx="11.5" ry="14.5" fill="url(#bean)"/>
+    <path d="M32 25 C 24.5 31 39.5 39 32 51" fill="none" stroke="#2a1b10" stroke-width="3" stroke-linecap="round"/>
+    <path d="M25 30 C 23.5 34 23.5 42 25 46" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity="0.35"/>
+  </g>
+</svg>

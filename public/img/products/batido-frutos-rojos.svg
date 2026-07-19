@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img">
+<defs>
+  <radialGradient id="bg" cx="50%" cy="38%" r="75%">
+    <stop offset="0%" stop-color="#efd8e0"/>
+    <stop offset="100%" stop-color="#f1e9dc"/>
+  </radialGradient>
+  <linearGradient id="drink" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="var(--none)"/>
+  </linearGradient>
+</defs>
+<rect width="400" height="300" fill="url(#bg)"/>
+<defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0%" stop-color="#c74b6e"/><stop offset="100%" stop-color="#7e2a4d"/>
+</linearGradient></defs>
+<circle cx="200" cy="150" r="108" fill="#a13a5e" opacity="0.16"/>
+<g fill="#7e2a4d" opacity="0.35">
+  <circle cx="70" cy="72" r="5"/><circle cx="330" cy="96" r="4"/>
+  <circle cx="86" cy="212" r="4"/><circle cx="326" cy="214" r="5"/>
+</g>
+<ellipse cx="200" cy="266" rx="92" ry="11" fill="#2a1b10" opacity="0.10"/>
+<g stroke-linecap="round">
+  <line x1="231" y1="108" x2="252" y2="26" stroke="#5a2140" stroke-width="13"/>
+  <line x1="234" y1="104" x2="254" y2="28" stroke="#ffffff" stroke-width="4" opacity="0.45"/>
+</g>
+  <path d="M150 84 L250 84 L241 236 Q240 248 228 248 L172 248 Q160 248 159 236 Z"
+        fill="url(#g1)" stroke="#2a1b10" stroke-opacity="0.22" stroke-width="2.5"/>
+  <path d="M166 100 L172 222" stroke="#ffffff" stroke-width="9" stroke-linecap="round" opacity="0.35"/>
+<g fill="#ffffff" opacity="0.3">
+    <circle cx="184" cy="148" r="4"/><circle cx="214" cy="178" r="5"/><circle cx="194" cy="210" r="4"/>
+  </g>
+<ellipse cx="200" cy="86" rx="50" ry="9" fill="#ffffff" opacity="0.5"/>
+<g>
+    <circle cx="168" cy="76" r="9" fill="#8e3b5c"/>
+    <circle cx="186" cy="68" r="7.5" fill="#5a2140"/>
+    <circle cx="176" cy="62" r="6" fill="#b0486f"/>
+    <path d="M186 60 q2 -8 9 -10" fill="none" stroke="#3e7a4e" stroke-width="3" stroke-linecap="round"/>
+  </g>
+</svg>

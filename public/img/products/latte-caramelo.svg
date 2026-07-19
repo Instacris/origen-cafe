@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img">
+<defs>
+  <radialGradient id="bg" cx="50%" cy="38%" r="75%">
+    <stop offset="0%" stop-color="#efe2ce"/>
+    <stop offset="100%" stop-color="#f1e9dc"/>
+  </radialGradient>
+  <linearGradient id="drink" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="var(--none)"/>
+  </linearGradient>
+</defs>
+<rect width="400" height="300" fill="url(#bg)"/>
+<circle cx="200" cy="150" r="108" fill="#c98a3b" opacity="0.16"/>
+<g fill="#a05c2c" opacity="0.35">
+  <circle cx="70" cy="72" r="5"/><circle cx="330" cy="96" r="4"/>
+  <circle cx="86" cy="212" r="4"/><circle cx="326" cy="214" r="5"/>
+</g>
+<ellipse cx="200" cy="266" rx="92" ry="11" fill="#2a1b10" opacity="0.10"/>
+<g stroke="#a05c2c" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.45">
+  <path d="M182 58 c0 -12 12 -12 12 -24 c0 -10 -8 -12 -8 -20"/>
+  <path d="M214 54 c0 -12 12 -12 12 -24 c0 -10 -8 -12 -8 -18"/>
+</g>
+  <path d="M162 76 L238 76 L231 240 Q230 251 219 251 L181 251 Q170 251 169 240 Z"
+        fill="#f6efe4" stroke="#2a1b10" stroke-opacity="0.25" stroke-width="2.5"/>
+  <path d="M238 110 h13 a22 22 0 0 1 0 44 h-16" fill="none" stroke="#2a1b10" stroke-opacity="0.3" stroke-width="7" stroke-linecap="round"/>
+<path d="M166 148 L234 148 L231 240 Q230 251 219 251 L181 251 Q170 251 169 240 Z" fill="#f0e5d3"/>
+<path d="M165 128 L235 128 L234 148 L166 148 Z" fill="#8a5a34"/>
+<path d="M164 96 L236 96 L235 128 L165 128 Z" fill="#f6ecdc"/>
+<ellipse cx="200" cy="96" rx="36" ry="8" fill="#fbf4e8"/>
+<path d="M172 90 q18 -12 28 0 q12 12 28 -2" fill="none" stroke="#c98a3b" stroke-width="4" stroke-linecap="round"/>
+<path d="M176 100 q16 8 48 0" fill="none" stroke="#c98a3b" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+<path d="M172 92 L177 236" stroke="#ffffff" stroke-width="8" stroke-linecap="round" opacity="0.4"/>
+</svg>

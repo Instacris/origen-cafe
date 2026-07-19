@@ -157,4 +157,55 @@ if (productCount === 0) {
   for (const p of seed) insert.run(...p);
 }
 
+// ---- Bebidas de la casa (migración: se insertan si aún no existen) ----
+const DRINKS_SEED = [
+  ['Malteada de Chocolate Belga', 'Malteadas',
+    'Helado artesanal, cacao belga 60% y leche entera, coronada con crema batida y cereza. Espesa como debe ser.',
+    5490, null, 0, 30, 1, '/img/products/malteada-chocolate.svg'],
+  ['Malteada de Fresa', 'Malteadas',
+    'Fresas frescas licuadas con helado de vainilla y un toque de crema. Dulzor natural, sin jarabes artificiales.',
+    4990, 5990, 1, 28, 0, '/img/products/malteada-fresa.svg'],
+  ['Malteada de Vainilla', 'Malteadas',
+    'Vainilla de vaina auténtica, helado cremoso y leche fría. El clásico que nunca falla, con hilo de caramelo.',
+    4990, null, 0, 26, 0, '/img/products/malteada-vainilla.svg'],
+  ['Malteada Cookies & Cream', 'Malteadas',
+    'Galletas de chocolate trituradas en helado de vainilla, con trozos crujientes y galleta entera de corona.',
+    5490, null, 0, 24, 0, '/img/products/malteada-cookies.svg'],
+  ['Batido de Mango y Maracuyá', 'Batidos',
+    'Mango maduro y pulpa de maracuyá batidos al momento. Tropical, refrescante y sin azúcar añadida.',
+    4490, null, 0, 32, 1, '/img/products/batido-mango.svg'],
+  ['Batido de Frutos Rojos', 'Batidos',
+    'Frutillas, arándanos y frambuesas con yogurt natural. Antioxidante y con el punto justo de acidez.',
+    4490, null, 0, 30, 0, '/img/products/batido-frutos-rojos.svg'],
+  ['Batido Verde Energía', 'Batidos',
+    'Espinaca, piña, jengibre y manzana verde. El empujón fresco para empezar el día con todo.',
+    4990, 5490, 1, 26, 0, '/img/products/batido-verde.svg'],
+  ['Batido de Plátano y Avena', 'Batidos',
+    'Plátano, avena integral, miel y canela sobre leche fría. Desayuno completo en un vaso.',
+    3990, null, 0, 34, 0, '/img/products/batido-platano-avena.svg'],
+  ['Latte Caramelo', 'Cafés de la Casa',
+    'Doble espresso de la casa, leche cremada a 65 °C y caramelo artesanal en capas. Nuestro más pedido.',
+    3990, null, 0, 40, 1, '/img/products/latte-caramelo.svg'],
+  ['Cappuccino Clásico', 'Cafés de la Casa',
+    'Tercios perfectos de espresso, leche texturizada y espuma sedosa, espolvoreado con cacao amargo.',
+    3490, null, 0, 40, 0, '/img/products/cappuccino.svg'],
+  ['Mocha con Crema', 'Cafés de la Casa',
+    'Espresso intenso con chocolate semiamargo fundido, coronado con crema batida y polvo de cacao.',
+    4290, 4990, 1, 36, 0, '/img/products/mocha-crema.svg'],
+  ['Cold Brew de la Casa', 'Cafés de la Casa',
+    'Extracción en frío por 16 horas de nuestro blend de altura. Suave, dulce natural y muy bajo en acidez.',
+    3990, null, 0, 30, 0, '/img/products/cold-brew.svg'],
+];
+
+{
+  const exists = db.prepare('SELECT COUNT(*) AS n FROM products WHERE name = ?');
+  const insertDrink = db.prepare(`
+    INSERT INTO products (name, category, description, price, prev_price, on_sale, stock, featured, image)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+  for (const p of DRINKS_SEED) {
+    if (exists.get(p[0]).n === 0) insertDrink.run(...p);
+  }
+}
+
 module.exports = { db, hashPassword, verifyPassword };
