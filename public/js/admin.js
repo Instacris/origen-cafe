@@ -29,6 +29,8 @@ const AdminApi = {
   deleteProduct(id) { return this.request('DELETE', `/api/admin/products/${id}`); },
   getOrders() { return this.request('GET', '/api/admin/orders'); },
   updateOrder(id, status) { return this.request('PUT', `/api/admin/orders/${id}`, { status }); },
+  getReservations() { return this.request('GET', '/api/admin/reservations'); },
+  updateReservation(id, status) { return this.request('PUT', `/api/admin/reservations/${id}`, { status }); },
   getSettings() { return this.request('GET', '/api/settings'); },
   updateSettings(data) { return this.request('PUT', '/api/admin/settings', data); },
   changePassword(current, next) { return this.request('PUT', '/api/admin/password', { current, next }); },
@@ -98,18 +100,21 @@ async function showPanel(username) {
 }
 
 async function refreshAll() {
-  const [products, orders, settings] = await Promise.all([
+  const [products, orders, reservations, settings] = await Promise.all([
     AdminApi.getProducts(),
     AdminApi.getOrders(),
+    AdminApi.getReservations(),
     AdminApi.getSettings(),
   ]);
   state.products = products;
   state.orders = orders;
+  state.reservations = reservations;
   state.settings = settings;
   renderStats();
   renderCategoryOptions();
   renderProductsTable();
   renderOrdersTable();
+  renderReservationsTable();
   renderSettingsForm();
 }
 
@@ -121,13 +126,15 @@ function renderStats() {
   const lowStock = active.filter((p) => p.stock > 0 && p.stock <= 5).length;
   const outStock = active.filter((p) => p.stock <= 0).length;
   const pending = state.orders.filter((o) => o.status === 'pendiente').length;
+  const pendingReservations = (state.reservations || []).filter((r) => r.status === 'pendiente').length;
 
   document.getElementById('stats-row').innerHTML = `
     <div class="stat-card"><div class="stat-label">Productos visibles</div><div class="stat-value">${active.length}</div></div>
     <div class="stat-card"><div class="stat-label">En oferta</div><div class="stat-value">${onSale}</div></div>
     <div class="stat-card ${lowStock ? 'alert' : ''}"><div class="stat-label">Stock bajo (≤5)</div><div class="stat-value">${lowStock}</div></div>
     <div class="stat-card ${outStock ? 'alert' : ''}"><div class="stat-label">Agotados</div><div class="stat-value">${outStock}</div></div>
-    <div class="stat-card ${pending ? 'alert' : ''}"><div class="stat-label">Pedidos pendientes</div><div class="stat-value">${pending}</div></div>`;
+    <div class="stat-card ${pending ? 'alert' : ''}"><div class="stat-label">Pedidos pendientes</div><div class="stat-value">${pending}</div></div>
+    <div class="stat-card ${pendingReservations ? 'alert' : ''}"><div class="stat-label">Reservas pendientes</div><div class="stat-value">${pendingReservations}</div></div>`;
 }
 
 // ---------------------------------------------------------------- tabla de productos
@@ -370,6 +377,37 @@ function renderOrdersTable() {
     </tr>`).join('');
 }
 
+// ---------------------------------------------------------------- reservas
+
+const RESERVATION_STATUSES = ['pendiente', 'confirmada', 'completada', 'cancelada'];
+
+function renderReservationsTable() {
+  const tbody = document.getElementById('reservations-tbody');
+  if (!tbody) return;
+  const rows = state.reservations || [];
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:var(--muted); padding:34px">Aún no hay reservas registradas.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = rows.map((r) => `
+    <tr>
+      <td><strong>#${r.id}</strong></td>
+      <td style="white-space:nowrap"><strong>${escapeHtml(r.date)}</strong> · ${escapeHtml(r.time)} h</td>
+      <td>
+        <div style="font-weight:600">${escapeHtml(r.name)}</div>
+        <div style="font-size:0.78rem; color:var(--muted)">${escapeHtml(r.contact)}</div>
+      </td>
+      <td style="text-align:center">${r.people}</td>
+      <td style="font-size:0.82rem; color:var(--ink-soft)">${escapeHtml(r.note || '—')}</td>
+      <td style="white-space:nowrap; font-size:0.8rem; color:var(--muted)">${escapeHtml(r.created_at)}</td>
+      <td>
+        <select class="select" data-reservation-status="${r.id}" style="padding:6px 10px; font-size:0.82rem">
+          ${RESERVATION_STATUSES.map((s) => `<option value="${s}" ${s === r.status ? 'selected' : ''}>${s[0].toUpperCase() + s.slice(1)}</option>`).join('')}
+        </select>
+      </td>
+    </tr>`).join('');
+}
+
 // ---------------------------------------------------------------- ajustes
 
 function renderSettingsForm() {
@@ -408,7 +446,7 @@ document.getElementById('logout-btn').addEventListener('click', async () => {
 document.querySelectorAll('.tab').forEach((tab) => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.tab').forEach((t) => t.classList.toggle('active', t === tab));
-    for (const name of ['products', 'orders', 'settings']) {
+    for (const name of ['products', 'orders', 'reservations', 'settings']) {
       document.getElementById(`tab-${name}`).hidden = name !== tab.dataset.tab;
     }
   });
@@ -521,6 +559,20 @@ document.getElementById('orders-tbody').addEventListener('change', async (event)
     if (order) order.status = event.target.value;
     renderStats();
     showToast(`Pedido #${id} marcado como “${event.target.value}”.`);
+  } catch (err) {
+    showToast(err.message, true);
+  }
+});
+
+document.getElementById('reservations-tbody').addEventListener('change', async (event) => {
+  if (!event.target.matches('[data-reservation-status]')) return;
+  const id = Number(event.target.dataset.reservationStatus);
+  try {
+    await AdminApi.updateReservation(id, event.target.value);
+    const reservation = (state.reservations || []).find((r) => r.id === id);
+    if (reservation) reservation.status = event.target.value;
+    renderStats();
+    showToast(`Reserva #${id} marcada como “${event.target.value}”.`);
   } catch (err) {
     showToast(err.message, true);
   }

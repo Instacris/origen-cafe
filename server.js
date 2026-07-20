@@ -329,6 +329,52 @@ async function updateOrder(req, res, session, match) {
   sendJson(res, 200, { ok: true });
 }
 
+// ---------------------------------------------------------------- reservas
+
+const RESERVATION_STATUSES = ['pendiente', 'confirmada', 'completada', 'cancelada'];
+
+async function createReservation(req, res) {
+  const body = await readJsonBody(req);
+  const name = String(body.name || '').trim();
+  const contact = String(body.contact || '').trim();
+  const date = String(body.date || '').trim();
+  const time = String(body.time || '').trim();
+  const people = toInt(body.people);
+  const note = String(body.note || '').trim().slice(0, 200);
+
+  if (!name || !contact) return sendJson(res, 400, { error: 'Completa tu nombre y un teléfono o correo.' });
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return sendJson(res, 400, { error: 'Elige una fecha válida.' });
+  if (!/^\d{2}:\d{2}$/.test(time)) return sendJson(res, 400, { error: 'Elige una hora válida.' });
+  if (!Number.isInteger(people) || people < 1 || people > 8) {
+    return sendJson(res, 400, { error: 'Las reservas son de 1 a 8 personas.' });
+  }
+  if (date < new Date().toISOString().slice(0, 10)) {
+    return sendJson(res, 400, { error: 'La fecha ya pasó — elige una desde hoy.' });
+  }
+
+  const result = db.prepare(
+    'INSERT INTO reservations (name, contact, date, time, people, note) VALUES (?, ?, ?, ?, ?, ?)'
+  ).run(name, contact, date, time, people, note);
+  sendJson(res, 201, { reservationId: Number(result.lastInsertRowid) });
+}
+
+function listReservations(req, res) {
+  const rows = db.prepare('SELECT * FROM reservations ORDER BY date, time, id DESC').all();
+  sendJson(res, 200, rows);
+}
+
+async function updateReservation(req, res, session, match) {
+  const id = Number(match[1]);
+  const body = await readJsonBody(req);
+  const status = String(body.status || '');
+  if (!RESERVATION_STATUSES.includes(status)) {
+    return sendJson(res, 400, { error: 'Estado inválido.' });
+  }
+  const result = db.prepare('UPDATE reservations SET status = ? WHERE id = ?').run(status, id);
+  if (!result.changes) return sendJson(res, 404, { error: 'Reserva no encontrada.' });
+  sendJson(res, 200, { ok: true });
+}
+
 async function updateSettings(req, res) {
   const body = await readJsonBody(req);
   const allowed = ['store_name', 'announcement_active', 'announcement_text'];
@@ -396,6 +442,9 @@ const routes = [
   ['DELETE', /^\/api\/admin\/products\/(\d+)$/, requireAuth(deleteProduct)],
   ['GET',    /^\/api\/admin\/orders$/,       requireAuth(listOrders)],
   ['PUT',    /^\/api\/admin\/orders\/(\d+)$/, requireAuth(updateOrder)],
+  ['POST',   /^\/api\/reservations$/,        createReservation],
+  ['GET',    /^\/api\/admin\/reservations$/, requireAuth(listReservations)],
+  ['PUT',    /^\/api\/admin\/reservations\/(\d+)$/, requireAuth(updateReservation)],
   ['PUT',    /^\/api\/admin\/settings$/,     requireAuth(updateSettings)],
   ['PUT',    /^\/api\/admin\/password$/,     requireAuth(changePassword)],
   ['POST',   /^\/api\/admin\/upload$/,       requireAuth(uploadImage)],

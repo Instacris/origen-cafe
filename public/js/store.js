@@ -29,6 +29,20 @@ const Api = {
     }
     return data;
   },
+  async reserve(payload) {
+    const res = await fetch('/api/reservations', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      const err = new Error(data.error || 'No se pudo registrar la reserva.');
+      err.status = res.status;
+      throw err;
+    }
+    return data;
+  },
 };
 
 const CART_KEY = 'origen_cart_v1';
@@ -426,11 +440,13 @@ async function submitCheckout(event) {
   submitBtn.textContent = 'Procesando…';
 
   try {
+    const mode = document.querySelector('input[name="delivery-mode"]:checked');
+    const isPickup = mode && mode.value === 'retiro';
     const payload = {
       customer: {
         name: document.getElementById('co-name').value,
         email: document.getElementById('co-email').value,
-        address: document.getElementById('co-address').value,
+        address: isPickup ? 'Retiro en la cafetería' : document.getElementById('co-address').value,
       },
       items: cartEntries().map((e) => ({ id: e.product.id, qty: e.qty })),
     };
@@ -443,7 +459,10 @@ async function submitCheckout(event) {
     document.getElementById('checkout-form-view').hidden = true;
     document.getElementById('checkout-success-view').hidden = false;
     document.getElementById('checkout-success-msg').textContent =
-      `Tu pedido N.º ${result.orderId} por ${money(result.total)} fue registrado. Te contactaremos al correo indicado para coordinar pago y despacho.`;
+      `Tu pedido N.º ${result.orderId} por ${money(result.total)} fue registrado. ` +
+      (isPickup
+        ? 'Te avisaremos por correo cuando esté listo para retirar en la cafetería.'
+        : 'Te contactaremos al correo indicado para coordinar pago y despacho.');
     document.getElementById('checkout-form').reset();
     openCart(false);
   } catch (err) {
@@ -484,10 +503,110 @@ async function loadSettings() {
   }
 }
 
+// ---------------------------------------------------------------- inicio: palabra rotatoria
+
+const ROT_WORDS = ['estudiar', 'trabajar', 'relajarte', 'leer', 'conversar'];
+let rotIndex = 0;
+
+function startWordRotator() {
+  const el = document.getElementById('rot-word');
+  if (!el) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  setInterval(() => {
+    el.classList.remove('in');
+    el.classList.add('out');
+    setTimeout(() => {
+      rotIndex = (rotIndex + 1) % ROT_WORDS.length;
+      el.textContent = ROT_WORDS[rotIndex];
+      el.classList.remove('out');
+      el.classList.add('in');
+    }, 320);
+  }, 2800);
+}
+
+// ---------------------------------------------------------------- inicio: fotos del usuario
+
+function wireHeroSlots() {
+  document.querySelectorAll('.stream-card img').forEach((img) => {
+    const slot = img.closest('.stream-card');
+    img.addEventListener('error', () => slot.classList.add('is-empty'));
+    img.addEventListener('load', () => slot.classList.remove('is-empty'));
+    if (img.complete && !img.naturalWidth) slot.classList.add('is-empty');
+  });
+}
+
+// ---------------------------------------------------------------- reservas
+
+function openReserve(open) {
+  const modal = document.getElementById('reserve-modal');
+  modal.classList.toggle('open', open);
+  if (open) {
+    document.getElementById('reserve-form-view').hidden = false;
+    document.getElementById('reserve-success-view').hidden = true;
+    document.getElementById('reserve-error').classList.remove('show');
+    document.getElementById('rv-name').focus();
+  }
+}
+
+function initReserveForm() {
+  // fecha mínima: hoy
+  const dateInput = document.getElementById('rv-date');
+  if (dateInput) dateInput.min = new Date().toISOString().slice(0, 10);
+
+  // horarios de atención cada 30 minutos
+  const timeSelect = document.getElementById('rv-time');
+  if (timeSelect) {
+    const slots = [];
+    for (let h = 8; h <= 19; h++) {
+      for (const m of ['00', '30']) {
+        if (h === 8 && m === '00') continue; // abre 8:30
+        slots.push(`${String(h).padStart(2, '0')}:${m}`);
+      }
+    }
+    timeSelect.innerHTML = slots.map((t) => `<option value="${t}" ${t === '16:00' ? 'selected' : ''}>${t} h</option>`).join('');
+  }
+}
+
+async function submitReserve(event) {
+  event.preventDefault();
+  const errorBox = document.getElementById('reserve-error');
+  errorBox.classList.remove('show');
+
+  const btn = document.getElementById('reserve-submit');
+  btn.disabled = true;
+  btn.textContent = 'Enviando…';
+
+  try {
+    const payload = {
+      name: document.getElementById('rv-name').value,
+      contact: document.getElementById('rv-contact').value,
+      date: document.getElementById('rv-date').value,
+      time: document.getElementById('rv-time').value,
+      people: Number(document.getElementById('rv-people').value),
+      note: document.getElementById('rv-note').value,
+    };
+    const result = await Api.reserve(payload);
+
+    document.getElementById('reserve-form-view').hidden = true;
+    document.getElementById('reserve-success-view').hidden = false;
+    document.getElementById('reserve-success-msg').textContent =
+      `Reserva N.º ${result.reservationId} para ${payload.people} ${payload.people === 1 ? 'persona' : 'personas'} el ${payload.date} a las ${payload.time} h. Te confirmamos por ${payload.contact.includes('@') ? 'correo' : 'WhatsApp'} dentro del horario de atención.`;
+    document.getElementById('reserve-form').reset();
+    initReserveForm();
+  } catch (err) {
+    errorBox.textContent = err.message;
+    errorBox.classList.add('show');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Solicitar reserva';
+  }
+}
+
 // ---------------------------------------------------------------- eventos
 
 document.addEventListener('click', (event) => {
-  const target = event.target.closest('[data-add], [data-qty-plus], [data-qty-minus], [data-remove], [data-category], [data-close-checkout]');
+  const target = event.target.closest('[data-add], [data-qty-plus], [data-qty-minus], [data-remove], [data-category], [data-close-checkout], [data-open-reserve], [data-close-reserve]');
   if (!target) return;
 
   if (target.dataset.add) addToCart(Number(target.dataset.add));
@@ -500,7 +619,22 @@ document.addEventListener('click', (event) => {
     renderGridAnimated();
   }
   else if (target.hasAttribute('data-close-checkout')) openCheckout(false);
+  else if (target.hasAttribute('data-open-reserve')) openReserve(true);
+  else if (target.hasAttribute('data-close-reserve')) openReserve(false);
 });
+
+// modo de entrega: mostrar u ocultar dirección
+document.querySelectorAll('input[name="delivery-mode"]').forEach((radio) => {
+  radio.addEventListener('change', () => {
+    const isPickup = radio.value === 'retiro' && radio.checked;
+    const field = document.getElementById('co-address-field');
+    const input = document.getElementById('co-address');
+    field.hidden = isPickup;
+    input.required = !isPickup;
+  });
+});
+
+document.getElementById('reserve-form').addEventListener('submit', submitReserve);
 
 // carrusel: navegación, puntos y pausa al pasar el mouse
 const showcaseSection = document.getElementById('destacados');
@@ -547,11 +681,14 @@ document.getElementById('sort-select').addEventListener('change', (e) => {
   renderGridAnimated();
 });
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') { openCart(false); openCheckout(false); }
+  if (e.key === 'Escape') { openCart(false); openCheckout(false); openReserve(false); }
 });
 
 // init
 loadSettings();
+startWordRotator();
+wireHeroSlots();
+initReserveForm();
 loadProducts().catch(() => {
   document.getElementById('product-grid').innerHTML =
     '<div class="empty-state">No se pudo cargar el catálogo. Verifica que el servidor esté activo.</div>';

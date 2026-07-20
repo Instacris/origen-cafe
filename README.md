@@ -1,7 +1,8 @@
-# ORIGEN Café — Tienda con carrito y panel administrativo
+# ORIGEN Café — Cafetería con pedidos, reservas y panel administrativo
 
-Tienda web de café (cafeteras, máquinas de espresso, vasos, molinillos, café y accesorios)
-con **carrito de compras**, **base de datos SQLite** y **panel de administración**.
+Sitio de una cafetería de especialidad (café, malteadas y batidos) para estudiar,
+trabajar o relajarse, con **carrito de pedidos** (delivery o retiro), **reserva de mesas**,
+**base de datos SQLite** y **panel de administración**.
 
 Construida con Node.js puro (sin dependencias externas): el servidor usa `node:http`
 y la base de datos usa el módulo integrado `node:sqlite`.
